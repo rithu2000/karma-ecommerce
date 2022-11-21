@@ -1,0 +1,174 @@
+<%- include('../partials/header'); %>
+
+
+    <!-- Start Banner Area -->
+    <section class="banner-area organic-breadcrumb">
+        <div class="container">
+            <div class="breadcrumb-banner d-flex flex-wrap align-items-center justify-content-end">
+                <div class="col-first">
+                    <h1>Wishlist</h1>
+                    <nav class="d-flex align-items-center">
+                        <a href="/">Home<span class="lnr lnr-arrow-right"></span></a>
+                        <a href="#">wishlist</a>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- End Banner Area -->
+
+    <% if(wishproducts){ %>
+        <% if(wishproducts.myWish.length>0){ %>
+
+            <!--================wishlist Area =================-->
+            <section class="cart_area">
+                <div class="container">
+                    <div class="cart_inner">
+                        <div class="table-responsive">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">Product</th>
+                                        <th scope="col">Price</th>
+                                        <th scope="col">Cart</th>
+                                        <th scope="col">Remove</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <% wishproducts.myWish.forEach((p)=>{ %>
+                                        <tr>
+                                            <td>
+                                                <div class="media">
+                                                    <div class="d-flex">
+                                                        <img src="/productImages/<%=p.productId.image[0] %>"
+                                                            width="100px" alt="">
+                                                    </div>
+                                                    <div class="media-body">
+                                                        <p>
+                                                            <%= p.productId.name %>
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <h5>Rs. <%= p.productId.price %>
+                                                </h5>
+                                            </td>
+                                            <td>
+                                                <button class="btn btn-info" onclick="addToCart('<%= p.productId._id %>')">AddtoCart</button>
+                                            </td>
+                                            <td>
+                                                <button class="btn"
+                                                    onclick="deleteWishlist('<%= p.productId._id %>')">&#10060;</button>
+                                            </td>
+                                        </tr>
+                                        <% }); %>
+                                            <tr class="out_button_area">
+                                                <td>
+
+                                                </td>
+                                                <td>
+
+                                                </td>
+                                                <td>
+
+                                                </td>
+                                                <td>
+                                                    <div class="checkout_btn_inner d-flex align-items-center">
+                                                        <a class="gray_btn" href="/">Continue Shopping</a>
+
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <!--================End Cart Area =================-->
+
+            <% }else{ %>
+                <div class="container">
+                    <div class="row text-center">
+                        <div class="col-md-12 mt-5">
+                            <div>
+                                <img src="/productImages/emptycart.png" alt="">
+                            </div>
+                            <div>
+                                <a class="btn btn-success my-3" href="/">Start Shopping</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <% } %>
+                    <% }else{ %>
+                        <div class="container">
+                            <div class="row text-center">
+                                <div class="col-md-12 mt-5">
+                                    <div>
+                                        <img src="/productImages/emptycart.png" alt="">
+                                    </div>
+                                    <div>
+                                        <a class="btn btn-success my-3" href="/">Start Shopping</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <% } %>
+
+
+                            <script>
+                                function deleteWishlist(proId) {
+                                    Swal.fire({
+                                        title: 'Are you sure?',
+                                        text: "Remove From Wishlist!",
+                                        icon: 'warning',
+                                        showCancelButton: true,
+                                        confirmButtonColor: '#013542',
+                                        cancelButtonColor: '#d33',
+                                        confirmButtonText: 'Remove!'
+                                    }).then((result) => {
+                                        if (result.isConfirmed) {
+                                            $.ajax({
+                                                url: '/deletewishlist/' + proId,
+                                                method: 'delete',
+                                                success: (response) => {
+                                                    if (response.status) {
+                                                        Swal.fire({
+                                                            icon: 'success',
+                                                            title: 'okey!..',
+                                                            text: 'remove from Wishlist',
+                                                            showConfirmButton: false,
+                                                            timer: 500
+                                                        })
+                                                        setTimeout(() => {
+                                                            location.reload()
+                                                        }, 500);
+                                                    }
+                                                }
+                                            })
+                                        }
+                                    })
+                                }
+
+                                function addToCart(proId) {
+                                    $.ajax({
+                                        url: '/cart/' + proId,
+                                        method: 'get',
+                                        success: (response) => {
+                                            Swal.fire({
+                                                icon: 'success',
+                                                title: 'okeyyy!..',
+                                                text: 'Successfully Added To the Cart',
+                                                showConfirmButton: false,
+                                            })
+                                            setTimeout(() => {
+                                                location.reload()
+                                            }, 1000)
+                                        }
+                                    })
+                                }
+                            </script>
+
+                            <%- include('../partials/footer'); %>

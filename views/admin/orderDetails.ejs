@@ -1,0 +1,89 @@
+<%- include('../partials/admin-header'); %>
+
+    <div class="col-lg-10 grid-margin stretch-card">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title">Orders</h4>
+                <div class="table-responsive">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>
+                                    Date
+                                </th>
+                                <th>
+                                    OrderId
+                                </th>
+                                <th>
+                                    Amount
+                                </th>
+                                <th>
+                                    Status
+                                </th>
+                                <th>
+                                    Action
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <% Order.forEach((result)=> { %>
+                                    <tr>
+                                        <td>
+                                            <%= result.date %>
+                                        </td>
+                                        <td>
+                                            <%= result._id %>
+                                        </td>
+                                        <td>
+                                            Rs.<%= result.total %>
+                                        </td>
+                                        <td>
+                                            <h6>
+                                                <%= result.orderStatus %>
+                                            </h6>
+                                            <% if(result.orderStatus=='Order Placed' ) { %>
+                                                <div class="progress">
+                                                    <div class="progress-bar bg-success" role="progressbar"
+                                                        style="width: 25%" aria-valuenow="25" aria-valuemin="0"
+                                                        aria-valuemax="100"></div>
+                                                </div>
+                                                <% } else if (result.orderStatus=='Order Pending' ) {%>
+                                                    <div class="progress">
+                                                        <div class="progress-bar bg-danger" role="progressbar"
+                                                            style="width: 25%" aria-valuenow="25" aria-valuemin="0"
+                                                            aria-valuemax="100"></div>
+                                                    </div>
+                                                    <% } else if (result.orderStatus=='Shipped' ) {%>
+                                                        <div class="progress">
+                                                            <div class="progress-bar bg-success" role="progressbar"
+                                                                style="width: 50%" aria-valuenow="50" aria-valuemin="0"
+                                                                aria-valuemax="100"></div>
+                                                        </div>
+                                                        <% } else if (result.orderStatus=='Cancelled' ) {%>
+                                                            <div class="progress">
+                                                                <div class="progress-bar bg-danger" role="progressbar"
+                                                                    style="width: 100%" aria-valuenow="100"
+                                                                    aria-valuemin="0" aria-valuemax="100"></div>
+                                                            </div>
+                                                            <% } else if (result.orderStatus=='Delivered' ) {%>
+                                                                <div class="progress">
+                                                                    <div class="progress-bar bg-success" role="progressbar"
+                                                                        style="width: 100%" aria-valuenow="100"
+                                                                        aria-valuemin="0" aria-valuemax="100"></div>
+                                                                </div>
+                                                            <% } %>
+                                        </td>
+                                        <td>
+                                            <a class="btn btn-outline-primary"
+                                                href="/admin/orderSummary/<%= result._id %>">View Details</a>
+                                        </td>
+                                    </tr>
+                                        <% }); %>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <%- include('../partials/admin-footer'); %>

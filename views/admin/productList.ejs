@@ -1,0 +1,159 @@
+<%- include('../partials/admin-header'); %>
+
+    <div class="col-lg-10 grid-margin stretch-card">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title">Product Management</h4>
+                <div class="table">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>
+                                    Image
+                                </th>
+                                <th>
+                                    Product name
+                                </th>
+                                <th>
+                                    Brand
+                                </th>
+                                <th>
+                                    Quantity
+                                </th>
+                                <th>
+                                    Category
+                                </th>
+                                <th>
+                                    Prize
+                                </th>
+                                <th>
+                                    Action
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <% result.forEach(function(result){ %>
+                                <tr>
+                                    <td class="py-1">
+                                        <img src="/productImages/<%= result.image[0] %>" alt="image" />
+                                    </td>
+                                    <td>
+                                        <%= result.name %>
+                                    </td>
+                                    <td>
+                                        <%= result.brand %>
+                                    </td>
+                                    <td>
+                                        <%= result.quantity %>
+                                    </td>
+                                    <td>
+                                        <%= result.category %>
+                                    </td>
+                                    <td>
+                                        <%= result.price %>
+                                    </td>
+                                    <td>
+                                        <a href="/admin/editProducts/<%= result._id %>" class="btn btn-primary">Edit</a>
+                                        <% if(result.status===true) { %>
+                                            <button class="btn btn-danger"
+                                                onclick="alert('<%= result._id %>')">Delete</button>
+                                            <% } else { %>
+                                                <button class="btn btn-success"
+                                                    onclick="alertt('<%= result._id %>')">Add</button>
+                                                <% } %>
+                                    </td>
+                                </tr>
+                                <% }); %>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        function alert(proId) {
+            Swal.fire({
+                title: 'Are you sure?',
+                text: "You won't be able to revert this!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, delete it!'
+            }).then((result) => {
+                $.ajax({
+                    url: '/admin/delProduct/' + proId,
+                    method: 'post',
+                    success: (response) => {
+                        if (result.isConfirmed) {
+                            Swal.fire({
+                                title: 'Deleted!',
+                                text: 'Your file has been deleted.',
+                                icon: 'success',
+                                showConfirmButton: false
+                            })
+                            setTimeout(() => {
+                                location.reload()
+                            }, 1000);
+                        }
+                    }
+                })
+            })
+        }
+        function alertt(proId) {
+            Swal.fire({
+                title: 'Are you sure?',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, Add product!'
+            }).then((result) => {
+                $.ajax({
+                    url: '/admin/delProduct/' + proId,
+                    method: 'post',
+                    success: (response) => {
+                        if (result.isConfirmed) {
+                            Swal.fire({
+                                title: 'Added!',
+                                text: 'Your Product has been Added.',
+                                icon: 'success',
+                                showConfirmButton: false
+                            })
+                            setTimeout(() => {
+                                location.reload()
+                            }, 1000);
+                        }
+                    }
+                })
+            })
+        }
+    </script>
+
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.1/jquery.min.js"
+        integrity="sha512-aVKKRRi/Q/YV+4mjoKBsE4x3H+BkegoM/em46NNlCqNTmUYADjBbeNefNxYV7giUp0VxICtqdrbqU7iVaeZNXA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <!-- plugins:js -->
+    <script src="/vendors/js/vendor.bundle.base.js"></script>
+    <!-- endinject -->
+    <!-- Plugin js for this page -->
+    <script src="/vendors/chart.js/Chart.min.js"></script>
+    <script src="/vendors/datatables.net/jquery.dataTables.js"></script>
+    <script src="/vendors/datatables.net-bs4/dataTables.bootstrap4.js"></script>
+    <script src="/js/dataTables.select.min.js"></script>
+
+    <!-- End plugin js for this page -->
+    <!-- inject:js -->
+    <script src="/js/off-canvas.js"></script>
+    <script src="/js/hoverable-collapse.js"></script>
+    <script src="/js/template.js"></script>
+    <script src="/js/settings.js"></script>
+    <script src="/js/todolist.js"></script>
+    <!-- endinject -->
+    <!-- Custom js for this page-->
+    <script src="/js/dashboard.js"></script>
+    <script src="/js/Chart.roundedBarCharts.js"></script>
+    <!-- End custom js for this page-->
+    </body>

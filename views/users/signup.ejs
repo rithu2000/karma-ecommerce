@@ -1,0 +1,124 @@
+<%- include('../partials/header'); %>
+	<!-- Start Banner Area -->
+	<section class="banner-area organic-breadcrumb">
+		<div class="container">
+			<div class="breadcrumb-banner d-flex flex-wrap align-items-center justify-content-end">
+				<div class="col-first">
+					<h1>Register an Account</h1>
+					<nav class="d-flex align-items-center">
+						<a href="/">Home<span class="lnr lnr-arrow-right"></span></a>
+						<a href="/login">Login/Register<span class="lnr lnr-arrow-right"></span></a>
+						<a href="/signup">Create an account</a>
+					</nav>
+				</div>
+			</div>
+		</div>
+	</section>
+	<!-- End Banner Area -->
+
+	<!--================Login Box Area =================-->
+	<section class="login_box_area section_gap">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-6">
+					<div class="login_box_img">
+						<img class="img-fluid" src="img/login.jpg" alt="">
+						<div class="hover">
+							<h4>Already have an Account?</h4>
+							<p>There are advances being made in science and technology everyday, and a good example of
+								this is the</p>
+							<a class="primary-btn" href="/login">Login Page</a>
+						</div>
+					</div>
+				</div>
+				<div class="col-lg-6">
+					<div class="login_form_inner">
+						<h3>Create an account</h3>
+						<form class="row login_form" action="/signup" method="post" id="contactForm"
+							novalidate="novalidate">
+							<% if(errMsg){ %>
+								<p class="text-danger">
+									<%= errMsg %>
+								</p>
+								<% } %>
+									<div class="col-md-12 form-group">
+										<input type="text" class="form-control" id="name" name="name" placeholder="Name"
+											onfocus="this.placeholder = ''" onblur="this.placeholder = 'Name'">
+										<span class="float-right text-danger" id="userNameErr"></span>
+									</div>
+									<div class="col-md-12 form-group">
+										<input type="email" class="form-control" id="email" name="email"
+											placeholder="Email" onfocus="this.placeholder = ''"
+											onblur="this.placeholder = 'Email'">
+										<span class="float-right text-danger" id="emailErr"></span>
+									</div>
+									<div class="col-md-12 form-group">
+										<input type="tel" class="form-control" id="mobno" name="mobno"
+											placeholder="Mob Number" onfocus="this.placeholder = ''"
+											onblur="this.placeholder = 'Mob Number'">
+										<span class="float-right text-danger" id="phoneErr"></span>
+									</div>
+									<div class="col-md-12 form-group">
+										<input type="password" class="form-control" id="password" name="password"
+											placeholder="Password" onfocus="this.placeholder = ''"
+											onblur="this.placeholder = 'Password'">
+										<span class="float-right text-danger" id="passwordErr"></span>
+									</div>
+									<div class="col-md-12 form-group">
+										<input type="password" class="form-control" id="confirmPassword"
+											name="confirmPassword" placeholder="Confirm Password"
+											onfocus="this.placeholder = ''"
+											onblur="this.placeholder = 'Confirm Password'">
+										<span class="float-right text-danger" id="comPassErr"></span>
+									</div>
+									<span id="wrong_pass_alert"></span>
+									<div class="col-md-12 form-group">
+										<button type="submit" value="submit" class="primary-btn  mt-3"
+											onclick="fieldvalidation()">Sign Up</button>
+									</div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+	<!--================End Login Box Area =================-->
+	<script>
+		function validate_password() {
+
+			const pass = document.getElementById('password').value;
+			const confirm_pass = document.getElementById('confirmPassword').value;
+			if (pass != confirm_pass) {
+				document.getElementById('wrong_pass_alert').style.color = 'red';
+				document.getElementById('wrong_pass_alert').innerHTML = '☒ Use same password';
+				document.getElementById('create').disabled = true;
+				document.getElementById('create').style.opacity = (0.4);
+			} else {
+				document.getElementById('wrong_pass_alert').style.color = 'green';
+				document.getElementById('wrong_pass_alert').innerHTML = '🗹 Password Matched';
+				document.getElementById('create').disabled = false;
+				document.getElementById('create').style.opacity = (1);
+			}
+		}
+
+		function fieldvalidation() {
+			if (document.getElementById('password').value == "") {
+				document.getElementById('passwordErr').innerHTML = "Password is required"
+			}
+			if (document.getElementById('confirmPassword').value == "") {
+				document.getElementById('comPassErr').innerHTML = "Confirm the password"
+			}
+			if (document.getElementById('name').value == "") {
+				document.getElementById('userNameErr').innerHTML = "required"
+			}
+			if (document.getElementById('email').value == "") {
+				document.getElementById('emailErr').innerHTML = 'Email is required'
+			}
+			if (document.getElementById('mobno').value == "") {
+				document.getElementById('phoneErr').innerHTML = 'Mobile number is required'
+			}
+
+		}
+	</script>
+
+	<%- include('../partials/footer'); %>

@@ -1,0 +1,211 @@
+<%- include('../partials/header'); %>
+
+    <!-- Start Banner Area -->
+    <section class="banner-area organic-breadcrumb">
+        <div class="container">
+            <div class="breadcrumb-banner d-flex flex-wrap align-items-center justify-content-end">
+                <div class="col-first">
+                    <h1>Shopping Cart</h1>
+                    <nav class="d-flex align-items-center">
+                        <a href="/">Home<span class="lnr lnr-arrow-right"></span></a>
+                        <a href="/cart">Cart</a>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- End Banner Area -->
+
+    <% if(cartProducts){ %>
+        <% if(cartProducts.products.length>0){ %>
+
+            <!--================Cart Area =================-->
+            <section class="cart_area">
+                <div class="container">
+                    <div class="cart_inner">
+                        <div class="table-responsive">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">Product</th>
+                                        <th scope="col">Price</th>
+                                        <th scope="col">Quantity</th>
+                                        <th scope="col">Total</th>
+                                        <th scope="col">Action</th>
+
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <% cartProducts.products.forEach((p)=> { %>
+                                        <tr>
+                                            <td>
+                                                <div class="media">
+                                                    <div class="d-flex">
+                                                        <img style="width: 100px;"
+                                                            src="/productImages/<%= p.productId.image[0] %>" alt="">
+                                                    </div>
+                                                    <div class="media-body">
+                                                        <p>
+                                                            <%= p.name %>
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <h5 >Rs. <span id="price<%= p._id %>"><%= p.price %></span> 
+                                                </h5>
+                                            </td>
+                                            <td>
+                                                <div class="product_count">
+                                                    <input type="text" name="qty" id="sst<%= p._id %>" maxlength="12"
+                                                        value="<%=p.quantity %>" title="Quantity:"
+                                                        class="input-text qty" disabled>
+                                                    <button
+                                                        onclick="var result = document.getElementById('sst<%= p._id %>');QuantityInc('<%= p._id %>'); var sst = result.value; if( !isNaN( sst )) result.value++;return false;"
+                                                        class="increase items-count" type="button"><i
+                                                            class="lnr lnr-chevron-up"></i></button>
+                                                    <button
+                                                        onclick="var result = document.getElementById('sst<%= p._id %>');QuantityDec('<%= p._id %>',result.value); var sst = result.value; if( !isNaN( sst ) &amp;&amp; sst > 1 ) result.value--;return false;"
+                                                        class="reduced items-count" type="button"><i
+                                                            class="lnr lnr-chevron-down"></i></button>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <h5 >Rs. <span id="totalPrice<%= p._id %>"><%= p.quantity*p.productId.price %></span> 
+                                                </h5>
+                                            </td>
+                                            <td>
+                                                <a class="btn" href="/removeCart/<%= p._id %>">&#10060;</a>
+                                            </td>
+                                        </tr>
+                                        <% }); %>
+                                            <!-- <tr class="bottom_button">
+                                <td>
+                                    <a class="gray_btn" href="#">Update Cart</a>
+                                </td>
+                                <td>
+
+                                </td>
+                                <td>
+
+                                </td>
+                                <td>
+                                    <div class="cupon_text d-flex align-items-center">
+                                        <input type="text" placeholder="Coupon Code">
+                                        <a class="primary-btn" href="#">Apply</a>
+                                        <a class="gray_btn" href="#">Close Coupon</a>
+                                    </div>
+                                </td>
+                            </tr> -->
+                                            <tr>
+                                                <td>
+
+                                                </td>
+                                                <td>
+
+                                                </td>
+                                                <td>
+                                                    <h5>Subtotal</h5>
+                                                </td>
+                                                <td>
+                                                    <h5>Rs. <span id="subtotal"><%= cartProducts.total %></span>
+                                                    </h5>
+                                                </td>
+                                            </tr>
+                                            <tr class="out_button_area">
+                                                <td>
+
+                                                </td>
+                                                <td>
+
+                                                </td>
+                                                <td>
+
+                                                </td>
+                                                <td>
+                                                    <div class="checkout_btn_inner d-flex align-items-center">
+                                                        <a class="gray_btn" href="/">Continue Shopping</a>
+                                                        <a class="primary-btn" href="/checkout">Proceed to checkout</a>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <!--================End Cart Area =================-->
+
+            <% }else{ %>
+                <div class="container">
+                    <div class="row text-center">
+                        <div class="col-md-12 mt-5">
+                            <div>
+                                <img src="/productImages/emptycart.png" alt="">
+                            </div>
+                            <div>
+                                <a class="btn btn-success my-3" href="/">Start Shopping</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <% } %>
+                    <% }else{ %>
+                        <div class="container">
+                            <div class="row text-center">
+                                <div class="col-md-12 mt-5">
+                                    <div>
+                                        <img src="/productImages/emptycart.png" alt="">
+                                    </div>
+                                    <div>
+                                        <a class="btn btn-success my-3" href="/">Start Shopping</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <% } %>
+                            <script>
+                                function QuantityInc(ProductId) {
+
+                                    $.ajax({
+                                        url: '/quantityInc/' + ProductId,
+                                        method: 'get',
+                                        success: (response) => {
+                                            if (response.status) {
+                                                let Quantity = document.getElementById('sst' + ProductId).value
+                                                let Price = document.getElementById('price' + ProductId).innerHTML
+                                                document.getElementById('totalPrice' + ProductId).innerHTML = Quantity * Price
+                                                let subtotal = document.getElementById('subtotal').innerHTML
+                                                subtotal = parseInt(subtotal)
+                                                Price = parseInt(Price)
+                                                document.getElementById('subtotal').innerHTML = subtotal + Price
+                                            }
+                                        }
+                                    })
+                                }
+                                function QuantityDec(ProductId, count) {
+                                    if (count > 1) {
+                                        $.ajax({
+                                            url: '/quantityDec/' + ProductId,
+                                            method: 'get',
+                                            success: (response) => {
+                                                if (response.status) {
+                                                    let Quantity = document.getElementById('sst' + ProductId).value
+                                                    console.log(Quantity);
+                                                    let Price = document.getElementById('price' + ProductId).innerHTML
+                                                    console.log(Price);
+                                                    document.getElementById('totalPrice' + ProductId).innerHTML = Quantity * Price
+                                                    let subtotal = document.getElementById('subtotal').innerHTML
+                                                    subtotal = parseInt(subtotal)
+                                                    Price = parseInt(Price)
+                                                    document.getElementById('subtotal').innerHTML = subtotal - Price
+                                                }
+                                            }
+                                        })
+                                    }
+                                }
+                            </script>
+
+
+                            <%- include('../partials/footer'); %>

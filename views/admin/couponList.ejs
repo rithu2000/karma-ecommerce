@@ -1,0 +1,59 @@
+<%- include('../partials/admin-header'); %>
+
+    <div class="content-wrapper">
+        <div class="row">
+            <div class="col-lg-12 grid-margin">
+                <div class="card mt-5">
+                    <div class="card-body">
+                        <h4 class="card-title">Coupon List</h4>
+                        <div class="table-responsive">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>CouponCode</th>
+                                        <th>Discount %</th>
+                                        <th>Coupon Limit</th>
+                                        <th>Expiry Date</th>
+                                        <th>Active Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <% Coupon.forEach(function (result) { %>
+                                        <tr>
+                                            <td>
+                                                <%= result.name %>
+                                            </td>
+                                            <td>
+                                                <%= result.couponCode %>
+                                            </td>
+                                            <td>
+                                                <%= result.discount %>
+                                            </td>
+                                            <td>
+                                                <%= result.maxlimit %>
+                                            </td>
+                                            <td>
+                                                <%= result.expDate.toDateString() %>
+                                            </td>
+                                            <td>
+                                                <% if(result.isActive===true){ %>
+                                                    <a href="/admin/couponStatus/<%= result._id %>"
+                                                        class="btn btn-danger">Deactivate</a>
+                                                    <% }else{ %>
+                                                        <a href="/admin/couponStatus/<%= result._id %>"
+                                                            class="btn btn-success">Activate</a>
+                                                        <% } %>
+                                            </td>
+                                        </tr>
+                                        <% }) %>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <%- include('../partials/admin-footer'); %>
