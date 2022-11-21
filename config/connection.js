@@ -1,7 +1,7 @@
 const mongoose = require('mongoose')
-
+require('dotenv').config()
 // making connection
-mongoose.connect('mongodb+srv://rithunlr1:1BMzjZjhyhTSISMv@cluster0.t0mutn0.mongodb.net/karma?retryWrites=true&w=majority')
+mongoose.connect(process.env.mongoose)
 
 const db = mongoose.connection;
 

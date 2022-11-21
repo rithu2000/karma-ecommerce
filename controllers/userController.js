@@ -1,6 +1,7 @@
 const db = require('../config/connection')
 const collection = require('../config/collection');
 const bcrypt = require('bcrypt');
+require('dotenv').config()
 const { userCollection } = require('../config/collection');
 const userSchema = require('../models/userModel');
 const productSchema = require('../models/productModel');
