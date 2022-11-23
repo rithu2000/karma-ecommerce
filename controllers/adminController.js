@@ -19,7 +19,7 @@ module.exports = {
         try {
             const bannerId = req.params.bannerId;
             let banner = await bannerSchema.findOne({ _id: bannerId })
-            // console.log(coupon);
+
             if (banner.access) {
                 bannerSchema.updateOne({ _id: bannerId }, { $set: { access: false } }).then(() => {
                     res.redirect('/admin/getbanner')
@@ -44,6 +44,7 @@ module.exports = {
             const banner = new bannerSchema({
                 name: req.body.name,
                 description: req.body.description,
+                url: req.body.url,
                 image: image
             })
             await banner.save();
@@ -148,7 +149,7 @@ module.exports = {
                     model: 'products'
                 }
             ]).exec()
-            console.log(Order);
+            // console.log(Order);
             res.render('admin/adminOrderSummary', { Order });
         } catch (err) {
             console.log(err);
