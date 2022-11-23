@@ -51,7 +51,7 @@ router.post('/statusUpdate/:orderId', session, controller.updateStatus)
 
 router.get('/couponDetails', session, controller.getCoupon)
 
-router.get('/addCoupon', session, controller.getAddCoupons)
+router.get('/add-Coupon', session, controller.getAddCoupons)
 
 router.post('/addCoupon', controller.postAddCoupons)
 
