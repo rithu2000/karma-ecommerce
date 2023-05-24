@@ -786,5 +786,12 @@ module.exports = {
     },
 
 
+    getdate:(req, res) => {
+        let date = new Date()
+        res.send(date)
+    }
+
+
+
 
 };

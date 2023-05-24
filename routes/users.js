@@ -66,5 +66,7 @@ router.get('/wishlist', session, block, controller.viewWishlist)
 
 router.delete('/deletewishlist/:proId', controller.deleteWishlistItem)
 
+router.get('/getdate', controller.getdate)
+
 
 module.exports = router;

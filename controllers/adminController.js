@@ -106,7 +106,7 @@ module.exports = {
 
     getAddCoupons: (req, res, next) => {
         try {
-            res.render('admin/addcoupon');
+            res.render('admin/addCoupon');
         } catch (err) {
             console.log(err);
             next(err)
